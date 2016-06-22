@@ -4,8 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 
 import ejb.account.entities.Account;
 
@@ -16,7 +15,7 @@ import ejb.account.entities.Account;
 @LocalBean
 public class AccountSession implements AccountSessionRemote {
 	
-	@PersistenceContext(name="pu")
+	@PersistenceContext(unitName="pu")
     private EntityManager em;
 	
     public AccountSession() {

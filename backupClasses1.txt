@@ -17,7 +17,7 @@ public class Account implements Serializable {
 	private double accountBalance;
 	private double accountCreditLine;
 	private String accountNumber;
-	private List<Userstoaccount> userstoaccounts;
+	private List<User> users;
 
 	public Account() {
 	}
@@ -61,28 +61,28 @@ public class Account implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Userstoaccount
-	@OneToMany(mappedBy="account", fetch=FetchType.EAGER)
-	public List<Userstoaccount> getUserstoaccounts() {
-		return this.userstoaccounts;
+	//bi-directional many-to-one association to User
+	@ManyToMany(mappedBy="accounts", fetch=FetchType.EAGER)
+	public List<User> getUsers() {
+		return this.users;
 	}
 
-	public void setUserstoaccounts(List<Userstoaccount> userstoaccounts) {
-		this.userstoaccounts = userstoaccounts;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
-	public Userstoaccount addUserstoaccount(Userstoaccount userstoaccount) {
-		getUserstoaccounts().add(userstoaccount);
-		userstoaccount.setAccount(this);
+	public User addUser(User user) {
+		getUsers().add(user);
+		user.addAccount(this);
 
-		return userstoaccount;
+		return user;
 	}
 
-	public Userstoaccount removeUserstoaccount(Userstoaccount userstoaccount) {
-		getUserstoaccounts().remove(userstoaccount);
-		userstoaccount.setAccount(null);
+	public User removeUser(User user) {
+		getUsers().remove(user);
+		user.addAccount(null);
 
-		return userstoaccount;
+		return user;
 	}
 
 }

@@ -3,10 +3,9 @@ package ejb.account.session;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 
+import ejb.account.entities.Account;
 import ejb.account.entities.User;
 
 
@@ -33,8 +32,14 @@ public class UserSession implements UserSessionRemote {
 	@Override
 	public void updateUser(User u) {
 		User usr = em.find(User.class, u.getUserId());
-		usr.setAccount(u.getAccount());
 		em.merge(usr);		
+	}
+	
+	
+	public void addAccountToUser(User u,Account a) {
+		User usr = em.find(User.class, u.getUserId());
+		usr.prendreAccounts().add(a);
+		em.merge(u);
 	}
 
 	@Override

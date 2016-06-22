@@ -5,5 +5,6 @@
 		<jta-data-source>java:jboss/datasources/mysqlDS</jta-data-source>
 		<class>ejb.account.entities.Account</class>
 		<class>ejb.account.entities.User</class>
+		<class>ejb.account.entities.Userstoaccount</class>
 	</persistence-unit>
 </persistence>

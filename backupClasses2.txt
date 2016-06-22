@@ -1,0 +1,70 @@
+package ejb.account.entities;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the user database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private int userId;
+	private String password;
+	private String username;
+	private List<Account> accounts;
+
+	public User() {
+	}
+
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	public int getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public String getUsername() {
+		return this.username;
+	}
+	
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	//bi-directional many-to-one association to Account
+
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="userstoaccount",
+			joinColumns=@JoinColumn(name="user_id", referencedColumnName="userId"),
+		    inverseJoinColumns=@JoinColumn(name="account_id", referencedColumnName="accountId"))
+	public List<Account> getAccounts() {
+		return this.accounts;
+	}
+
+	public void addAccount(Account account) {
+		this.accounts.add(account);
+	}
+
+}

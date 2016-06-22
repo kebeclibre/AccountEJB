@@ -3,6 +3,9 @@ package ejb.account.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * The persistent class for the user database table.
@@ -13,9 +16,10 @@ import javax.persistence.*;
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int userId;
+	//private int accountId;
 	private String password;
 	private String username;
-	private Account account;
+	private List<Userstoaccount> userstoaccounts;
 
 	public User() {
 	}
@@ -30,6 +34,15 @@ public class User implements Serializable {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+
+
+//	public int getAccountId() {
+//		return this.accountId;
+//	}
+//
+//	public void setAccountId(int accountId) {
+//		this.accountId = accountId;
+//	}
 
 
 	public String getPassword() {
@@ -50,15 +63,37 @@ public class User implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Account
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="accountId")
-	public Account getAccount() {
-		return this.account;
+	//bi-directional many-to-one association to Userstoaccount
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
+	public List<Userstoaccount> getUserstoaccounts() {
+		return this.userstoaccounts;
 	}
 
-	public void setAccount(Account account) {
-		this.account = account;
+	public void setUserstoaccounts(List<Userstoaccount> userstoaccounts) {
+		this.userstoaccounts = userstoaccounts;
+	}
+
+	public Userstoaccount addUserstoaccount(Userstoaccount userstoaccount) {
+		getUserstoaccounts().add(userstoaccount);
+		userstoaccount.setUser(this);
+
+		return userstoaccount;
+	}
+
+	public Userstoaccount removeUserstoaccount(Userstoaccount userstoaccount) {
+		getUserstoaccounts().remove(userstoaccount);
+		userstoaccount.setUser(null);
+
+		return userstoaccount;
+	}
+	
+	public List<Account> prendreAccounts() {
+		List<Account> listAccount = new ArrayList<>();
+		for (Userstoaccount uta : userstoaccounts) {
+			listAccount.add(uta.getAccount());
+		}
+		
+		return listAccount;
 	}
 
 }
