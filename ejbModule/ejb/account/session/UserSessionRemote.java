@@ -20,4 +20,10 @@ public interface UserSessionRemote {
 	public void create(User ul);
 	
 	public User getUserWithCredentials(String username, String password);
+	
+	public User getUserById(int id);
+	
+	public void addAccountToUser(User u, Account a);
+	
+	public void persistRelation(Userstoaccount rel);
 }

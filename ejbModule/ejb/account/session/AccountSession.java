@@ -22,7 +22,7 @@ public class AccountSession implements AccountSessionRemote {
     }
 
 	@Override
-	public void updateAcccount(Account a) {
+	public void updateAccount(Account a) {
 		em.merge(a);
 		
 	}
@@ -46,8 +46,18 @@ public class AccountSession implements AccountSessionRemote {
 
 	@Override
 	public void create(Account a) {
-		// TODO Auto-generated method stub
+		em.persist(a);
 		
+	}
+
+	@Override
+	public Account getAccountById(int id) {
+		TypedQuery<Account> tq =  em.createQuery("select a from Account a where a.accountId=:aid",Account.class).setParameter("aid", id);
+		if (null != tq) {
+			return tq.getSingleResult();
+		}
+		
+		return null;
 	}
     
     

@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 import ejb.account.entities.Account;
 import ejb.account.entities.User;
+import ejb.account.entities.Userstoaccount;
 
 
 /**
@@ -35,11 +36,11 @@ public class UserSession implements UserSessionRemote {
 		em.merge(usr);		
 	}
 	
-	
+	@Override
 	public void addAccountToUser(User u,Account a) {
 		User usr = em.find(User.class, u.getUserId());
 		usr.prendreAccounts().add(a);
-		em.merge(u);
+		em.merge(usr);
 	}
 
 	@Override
@@ -73,5 +74,23 @@ public class UserSession implements UserSessionRemote {
 		return null;
 				
 	}
+	
+	public User getUserById(int id) {
+		TypedQuery<User> tq =  em.createQuery("select u from User u where u.userId=:aid",User.class).setParameter("aid", id);
+		if (null != tq) {
+			return tq.getSingleResult();
+		}
+		
+		return null;
+	}
+
+	@Override
+	public void persistRelation(Userstoaccount rel) {
+		em.persist(rel);
+		
+	}
+	
+
+	
     
 }
