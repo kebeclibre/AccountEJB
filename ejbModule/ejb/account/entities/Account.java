@@ -2,6 +2,8 @@ package ejb.account.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,6 +20,7 @@ public class Account implements Serializable {
 	private double accountCreditLine;
 	private String accountNumber;
 	private List<Userstoaccount> userstoaccounts;
+	public List<User> users;
 
 	public Account() {
 	}
@@ -83,6 +86,16 @@ public class Account implements Serializable {
 		userstoaccount.setAccount(null);
 
 		return userstoaccount;
+	}
+	
+	public List<User> associatedUsers() {
+		if (null!=userstoaccounts){
+			users = new ArrayList<>();
+		for (Userstoaccount uta : userstoaccounts) {
+			users.add(uta.getUser());
+		}}
+		
+		return users;
 	}
 
 }

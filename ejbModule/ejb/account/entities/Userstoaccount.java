@@ -32,7 +32,7 @@ public class Userstoaccount implements Serializable {
 
 
 	//bi-directional many-to-one association to Account
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade={CascadeType.PERSIST})
 	@JoinColumn(name="account_id")
 	public Account getAccount() {
 		return this.account;

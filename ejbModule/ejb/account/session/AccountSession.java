@@ -35,7 +35,6 @@ public class AccountSession implements AccountSessionRemote {
 
 	@Override
 	public List<Account> searchAccountByNumber(String num) {
-		
 		return em.createQuery("select a from Account a where a.accountNumber LIKE "+num+"", Account.class).getResultList();
 	}
 

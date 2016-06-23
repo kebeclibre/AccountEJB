@@ -20,6 +20,7 @@ public class User implements Serializable {
 	private String password;
 	private String username;
 	private List<Userstoaccount> userstoaccounts;
+	private List<Account> accounts;
 
 	public User() {
 	}
@@ -88,12 +89,14 @@ public class User implements Serializable {
 	}
 	
 	public List<Account> prendreAccounts() {
-		List<Account> listAccount = new ArrayList<>();
-		for (Userstoaccount uta : userstoaccounts) {
-			listAccount.add(uta.getAccount());
-		}
 		
-		return listAccount;
+		if (null!=userstoaccounts){
+			accounts = new ArrayList<>();
+		for (Userstoaccount uta : userstoaccounts) {
+			accounts.add(uta.getAccount());
+		}}
+		
+		return accounts;
 	}
 
 }

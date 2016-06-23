@@ -33,6 +33,8 @@ public class UserSession implements UserSessionRemote {
 	@Override
 	public void updateUser(User u) {
 		User usr = em.find(User.class, u.getUserId());
+		usr.setPassword(u.getPassword());
+		usr.setUsername(u.getUsername());;
 		em.merge(usr);		
 	}
 	
@@ -64,11 +66,12 @@ public class UserSession implements UserSessionRemote {
 	}
 
 	public User getUserWithCredentials(String username, String password) {
-		TypedQuery<User> tq = em.createQuery("select u from User u where u.username=:uname AND u.password=:upwd",User.class)
+		List<User> list = em.createQuery("select u from User u where u.username=:uname AND u.password=:upwd",User.class)
 				.setParameter("uname", username)
-				.setParameter("upwd",password);
-		if (null != tq) {
-			return tq.getSingleResult();
+				.setParameter("upwd",password).getResultList();
+		
+		if (list.size()==1) {
+			return list.get(0);
 		}
 		
 		return null;
@@ -85,8 +88,9 @@ public class UserSession implements UserSessionRemote {
 	}
 
 	@Override
-	public void persistRelation(Userstoaccount rel) {
+	public Userstoaccount persistRelation(Userstoaccount rel) {
 		em.persist(rel);
+		return rel;
 		
 	}
 	

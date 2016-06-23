@@ -25,5 +25,6 @@ public interface UserSessionRemote {
 	
 	public void addAccountToUser(User u, Account a);
 	
-	public void persistRelation(Userstoaccount rel);
+	public Userstoaccount persistRelation(Userstoaccount rel);
+
 }
