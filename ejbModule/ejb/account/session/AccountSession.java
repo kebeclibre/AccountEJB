@@ -53,7 +53,11 @@ public class AccountSession implements AccountSessionRemote {
 	public Account getAccountById(int id) {
 		TypedQuery<Account> tq =  em.createQuery("select a from Account a where a.accountId=:aid",Account.class).setParameter("aid", id);
 		if (null != tq) {
-			return tq.getSingleResult();
+			List<Account> l = tq.getResultList();
+			if(l.size()==1) {
+				return l.get(0);
+			}
+			return null;
 		}
 		
 		return null;
