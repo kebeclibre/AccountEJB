@@ -16,6 +16,7 @@ public interface UsersToAccountRemote {
 	public void addAccountToUser(Account a, User u);
 	public void addUserToAccount(Account a, User u);
 	public void removeRel(Userstoaccount rel);
+	public int removeRelByCombinedId(int userId,int accountId);
 	
 	
 }

@@ -65,7 +65,7 @@ public class Account implements Serializable {
 
 
 	//bi-directional many-to-one association to Userstoaccount
-	@OneToMany(mappedBy="account", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="account", fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
 	public List<Userstoaccount> getUserstoaccounts() {
 		return this.userstoaccounts;
 	}

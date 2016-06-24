@@ -47,7 +47,7 @@ public class UserSession implements UserSessionRemote {
 
 	@Override
 	public void removeUser(User u) {
-		em.remove(u);
+		em.remove(em.find(User.class, u.getUserId()));
 		
 	}
 
